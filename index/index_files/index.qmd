@@ -59,7 +59,7 @@ kable()
 pacientes |>
   filter(sex == "0") |>
   select(sex, ejection_fraction, anaemia, diabetes)|>
-   arrange(desc(ejection_fraction )) |>
+  arrange(desc(ejection_fraction))|>
 kable()
 ```
 
@@ -72,25 +72,22 @@ kable()
 # Tabla que muestre el promedio de creatinina sérica de pacientes sobrevivientes y de pacientes fallecidos
 
 pacientes |>
-  group_by(DEATH_EVENT) |>
-  summarise(serum_creatinine = mean(serum_creatinine, na.rm = TRUE),
-            n = n()) |>
+select(serum_creatinine, DEATH_EVENT)|>
+   
   kable()
 ```
 
 ## Consulta-04
 
-Muestra el valor máximo de creatinina sérica de las mujeres que son anémicas o diabéticas
 
 ```{r}
 #| label: Consulta-04
 
 pacientes |>
- filter(sex == "0" & anaemia == "1" | diabetes == "1") |>
- group_by(anaemia, diabetes) |>
- summarise(serum_creatinine = max(serum_creatinine, na.rm = TRUE),
-  n = n ()) |>
-  kable()
+ filter(sex == "0" & diabetes == "1" & anaemia == "1") |>
+select(sex, serum_creatinine, anaemia, diabetes)
+
+
  
 ```
 
